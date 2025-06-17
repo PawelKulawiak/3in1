@@ -1,0 +1,444 @@
+---
+title: "3-in-1-Workshop"
+subtitle: "Einführung in Korrelation, Regression und Multilevel-Analyse mit R"
+format: html
+lang: de
+date: today
+license: "CC BY"
+html-table-processing: none
+link-external-newwindow: true
+toc: true
+toc-location: body
+embed-resources: false
+theme: minty
+title-block-banner: true
+published-title: Letzte Aktualisierung
+page-layout: full
+code-link: true
+execute: 
+  warning: false
+  message: false
+author:
+  name: Pawel R. Kulawiak
+  orcid: 0000-0001-5939-4380
+  email: kulawiak.pawel@uni-koeln.de
+  url: https://pawelkulawiak.github.io/
+  affiliations:
+    name: Universität zu Köln, Graduiertenschule für Lehrer:innenbildung
+    url: https://zfl.uni-koeln.de/graduiertenschule/die-graduiertenschule-auf-einen-blick/team
+---
+
+```{=html}
+<style>
+/* Add R logo to the title banner */
+#title-block-header.quarto-title-block.default .quarto-title::before {
+  content: '';
+  display: block;
+  background-image: url('https://www.r-project.org/Rlogo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: left;
+  width: 100%;
+  height: 100px;
+  margin-bottom: 20px;
+}
+</style>
+```
+
+## Motivation
+```{=html}
+<iframe src="test.html" width="100%" height="600px" frameborder="0"></iframe>
+```
+
+:::::: {.grid}
+
+::: {.g-col-5}
+![[Bickel, R. (2007). Multilevel analysis for applied research: It's just regression! The Guilford Press.](https://psycnet.apa.org/record/2007-06641-000)](https://m.media-amazon.com/images/I/417C8lvO3eL.jpg)
+:::
+
+::: {.g-col-7}
+> Multilevel
+analysis has dramatically burst on the scene, and we now have the statistical tools to
+study phenomena at multiple levels. However, many researchers think that they cannot
+conduct such analyses because they are too complicated and they require specialized,
+expensive software. Fortunately, as this book shows, both of these beliefs are mistaken.
+
+> First, multilevel analysis is not all that complex, as conveyed in the subtitle of the
+book: **“It’s Just Regression.”** If the reader understands multiple regression, the fundamental statistical model in the social sciences, it is a relatively simple step to learn about
+multilevel analysis.
+
+Series Editor’s Note (David A. Kenny)
+
+::: {.callout-tip}
+## Ablauf
+**Korrelation → Regression → Multilevel-Analysis (Multilevel-Regression)**
+:::
+
+:::
+
+::::::
+
+## Korrelation
+
+::::::: callout-tip
+## Datenquelle
+
+Imuta K, Scarf D, Pharo H, Hayne H (2013) Drawing a Close to the Use of Human Figure Drawings as a Projective Measure of Intelligence. PLoS ONE 8(3): e58991.
+
+- <https://doi.org/10.1371/journal.pone.0058991> (Paper)
+- <https://doi.org/10.1371/journal.pone.0058991.s001> (Daten im Word-Format)
+- <https://github.com/PawelKulawiak/rworkshop/blob/main/DATA_doi_10.1371_journal.pone.0058991.xlsx> (Daten im Excel-Format)
+- <https://github.com/PawelKulawiak/rworkshop/raw/refs/heads/main/DATA_doi_10.1371_journal.pone.0058991.xlsx> (Direkter Download: Daten im Excel-Format)
+
+Variablen:
+
+-   DAP_IQ: [Draw-A-Person Intellectual Ability Test](https://en.wikipedia.org/wiki/Draw-a-Person_test) ([Mann-Zeichen-Test](https://www.testzentrale.de/shop/der-mann-zeichen-test.html))
+-   WPPSI: [Wechsler Preschool and Primary Scale of Intelligence](https://de.wikipedia.org/wiki/Wechsler_Preschool_and_Primary_Scale_of_Intelligence)
+
+\
+
+:::::: grid
+::: g-col-4
+![](https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0058991.g003&type=large)
+:::
+
+::: g-col-3
+![](https://www.testzentrale.de/shop/media/catalog/product/cache/1600x/17f82f742ffe127f42dca9de82fb58b1/4/7/4700801.jpg)
+:::
+
+::: g-col-3
+![](https://www.testzentrale.de/shop/media/catalog/product/cache/1600x/17f82f742ffe127f42dca9de82fb58b1/2/8/2813001.jpg)
+:::
+::::::
+:::::::
+
+```{r}
+library(readxl)
+library(gt)
+library(tidyverse)
+
+DATA <-
+  read_xlsx("DATA_doi_10.1371_journal.pone.0058991.xlsx")
+
+head(DATA) %>%
+  gt() %>%
+  tab_options(table.align = "left") %>%
+  tab_header("Die ersten 6 kinder des Datensatzes", "100 Kinder insgesamt")
+```
+
+### Visualisierung
+
+::: {.callout-tip}
+## Univariat und bivariat
+Die dargestellten Abbildungen demonstrieren die univariate Visualisierung beider Verteilungen (separate Histogramme für DAP_IQ und WPPSI) und anschließend die Überführung der beiden univariaten Verteilungen in einen 2-dimensionalen Raum, also das bivariate Streudiagramm (scatter plot) der beiden Variablen (DAP_IQ und WPPSI).
+:::
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  # geom_density(col = "blue") +
+  geom_point(aes(y = 0),
+             width = 0,
+             # height = 0.001,
+             shape = 21,
+             # alpha = 0.3,
+             size = 3,
+             fill = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 12)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
+  geom_density(col = "blue") +
+  geom_jitter(aes(y = 0),
+              width = 0,
+              height = 0.002,
+              shape = 21,
+              alpha = 0.3,
+              size = 3,
+              fill = "blue") +
+  # ylab("n") +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  # geom_density(col = "blue") +
+  geom_point(aes(y = 0),
+             width = 0,
+             # height = 0.001,
+             shape = 21,
+             # alpha = 0.3,
+             size = 3,
+             fill = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 12)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
+  geom_density(col = "blue") +
+  geom_jitter(aes(y = 0),
+              width = 0,
+              height = 0.002,
+              shape = 21,
+              alpha = 0.3,
+              size = 3,
+              fill = "blue") +
+  # ylab("n") +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 12)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  coord_flip() +
+  theme_classic(base_size = 12)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  # coord_flip() +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  xlim(c(0, 140)) +
+  coord_flip() +
+  theme_classic(base_size = 12)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  xlim(c(0, 150)) +
+  ylab("n") +
+  # coord_flip() +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  xlim(c(0, 140)) +
+  coord_flip() +
+  theme_classic(base_size = 12)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  xlim(c(0, 150)) +
+  ylab("n") +
+  # coord_flip() +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(aes(y = 0), col = "blue") +
+  geom_point(aes(x = 0), col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+:::::: {.grid}
+::: {.g-col-6}
+
+
+
+```{r}
+#| code-fold: true
+#| cache: true
+
+library(gganimate)
+# Assuming your data is called 'DATA'
+# Create animation data with transition states
+create_animation_data <- function(data, n_frames = 50) {
+  
+  # Create frames for the transition
+  frames <- data.frame()
+  
+  for(i in 0:n_frames) {
+    # Calculate transition progress (0 = marginal, 1 = scatter)
+    progress <- i / n_frames
+    
+    # Smooth easing function (ease-in-out)
+    eased_progress <- 3 * progress^2 - 2 * progress^3
+    
+    frame_data <- data %>%
+      mutate(
+        # Interpolate between marginal positions and actual positions
+        x_pos = (1 - eased_progress) * 0 + eased_progress * DAP_IQ,
+        y_pos = (1 - eased_progress) * WPPSI + eased_progress * WPPSI,
+        frame = i,
+        state = ifelse(i == 0, "Marginal Y", 
+                      ifelse(i == n_frames, "Scatter", "Transition"))
+      )
+    
+    # Add marginal X distribution points
+    frame_data_x <- data %>%
+      mutate(
+        x_pos = (1 - eased_progress) * DAP_IQ + eased_progress * DAP_IQ,
+        y_pos = (1 - eased_progress) * 0 + eased_progress * WPPSI,
+        frame = i,
+        state = ifelse(i == 0, "Marginal X", 
+                      ifelse(i == n_frames, "Scatter", "Transition"))
+      )
+    
+    frames <- rbind(frames, frame_data, frame_data_x)
+  }
+  
+  return(frames)
+}
+
+# Create the animation data
+# Replace 'DATA' with your actual dataset name
+anim_data <- create_animation_data(DATA)
+
+# Create the animated plot
+p <- ggplot(anim_data, aes(x = x_pos, y = y_pos)) +
+  geom_point(col = "blue", size = 1.5, alpha = 0.7) +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  labs(
+    #title = "Transition from Marginal Distributions to Scatter Plot",
+    #subtitle = "Frame: {closest_state}",
+    x = "DAP_IQ",
+    y = "WPPSI"
+  ) +
+  theme_classic(base_size = 12) +
+  transition_states(frame,
+                   transition_length = 5,
+                   state_length = 5) +
+  ease_aes('cubic-in-out')
+
+# Render the animation
+anim <- animate(p,
+                fps = 40, 
+                duration = 20,
+                renderer = gifski_renderer("marginal_to_scatter.gif"))
+
+anim
+
+```
+:::
+
+::: {.g-col-6}
+```{r}
+#| code-fold: true
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  #
+  theme_classic(base_size = 12)
+```
+:::
+::::::
+
+
+BIVARIATE DICHTE
+
+<https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html>
+
+<https://exts.ggplot2.tidyverse.org/gallery/>
+
+<https://bookdown.org/roback/bookdown-BeyondMLR/>
+
+## R Session Info
+
+```{r}
+library(devtools)
+session_info()
+```
+
