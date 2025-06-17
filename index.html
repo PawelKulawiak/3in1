@@ -111,6 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
 <li><a href="#motivation" id="toc-motivation">Motivation</a></li>
+  <li><a href="#pakete" id="toc-pakete">Pakete</a></li>
   <li>
 <a href="#korrelation" id="toc-korrelation">Korrelation</a>
   <ul>
@@ -133,7 +134,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 <section id="motivation" class="level2"><h2 class="anchored" data-anchor-id="motivation">Motivation</h2>
-<iframe src="test.html" width="100%" height="600px" frameborder="0"></iframe>
 <div class="grid">
 <div class="g-col-5">
 <div class="quarto-figure quarto-figure-center">
@@ -164,6 +164,12 @@ Ablauf
 </div>
 </div>
 </div>
+</section><section id="pakete" class="level2"><h2 class="anchored" data-anchor-id="pakete">Pakete</h2>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span> <span class="co"># https://www.tidyverse.org/</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span> <span class="co"># https://readxl.tidyverse.org/ (Teil von tidyverse)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com">gt</a></span><span class="op">)</span> <span class="co"># https://gt.rstudio.com/</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section><section id="korrelation" class="level2"><h2 class="anchored" data-anchor-id="korrelation">Korrelation</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -188,8 +194,10 @@ Datenquelle
 </ul>
 <p>Variablen:</p>
 <ul>
-<li>DAP_IQ: <a href="https://en.wikipedia.org/wiki/Draw-a-Person_test">Draw-A-Person Intellectual Ability Test</a> (<a href="https://www.testzentrale.de/shop/der-mann-zeichen-test.html">Mann-Zeichen-Test</a>)</li>
-<li>WPPSI: <a href="https://de.wikipedia.org/wiki/Wechsler_Preschool_and_Primary_Scale_of_Intelligence">Wechsler Preschool and Primary Scale of Intelligence</a>
+<li>
+<strong>DAP_IQ</strong>: <a href="https://en.wikipedia.org/wiki/Draw-a-Person_test">Draw-A-Person Intellectual Ability Test</a> (<a href="https://www.testzentrale.de/shop/der-mann-zeichen-test.html">Mann-Zeichen-Test</a>)</li>
+<li>
+<strong>WPPSI</strong>: <a href="https://de.wikipedia.org/wiki/Wechsler_Preschool_and_Primary_Scale_of_Intelligence">Wechsler Preschool and Primary Scale of Intelligence</a>
 </li>
 </ul>
 <p><br></p>
@@ -207,11 +215,7 @@ Datenquelle
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com">gt</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">DATA</span> <span class="op">&lt;-</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_xlsx</a></span><span class="op">(</span><span class="st">"DATA_doi_10.1371_journal.pone.0058991.xlsx"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">DATA</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -219,23 +223,23 @@ Datenquelle
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_options.html">tab_options</a></span><span class="op">(</span>table.align <span class="op">=</span> <span class="st">"left"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://gt.rstudio.com/reference/tab_header.html">tab_header</a></span><span class="op">(</span><span class="st">"Die ersten 6 kinder des Datensatzes"</span>, <span class="st">"100 Kinder insgesamt"</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="sqhxlnficm" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#sqhxlnficm table {
+<div id="qzlvysyznv" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qzlvysyznv table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#sqhxlnficm thead, #sqhxlnficm tbody, #sqhxlnficm tfoot, #sqhxlnficm tr, #sqhxlnficm td, #sqhxlnficm th {
+#qzlvysyznv thead, #qzlvysyznv tbody, #qzlvysyznv tfoot, #qzlvysyznv tr, #qzlvysyznv td, #qzlvysyznv th {
   border-style: none;
 }
 
-#sqhxlnficm p {
+#qzlvysyznv p {
   margin: 0;
   padding: 0;
 }
 
-#sqhxlnficm .gt_table {
+#qzlvysyznv .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -261,12 +265,12 @@ Datenquelle
   border-left-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_caption {
+#qzlvysyznv .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#sqhxlnficm .gt_title {
+#qzlvysyznv .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -278,7 +282,7 @@ Datenquelle
   border-bottom-width: 0;
 }
 
-#sqhxlnficm .gt_subtitle {
+#qzlvysyznv .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -290,7 +294,7 @@ Datenquelle
   border-top-width: 0;
 }
 
-#sqhxlnficm .gt_heading {
+#qzlvysyznv .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -302,13 +306,13 @@ Datenquelle
   border-right-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_bottom_border {
+#qzlvysyznv .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_col_headings {
+#qzlvysyznv .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -323,7 +327,7 @@ Datenquelle
   border-right-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_col_heading {
+#qzlvysyznv .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -343,7 +347,7 @@ Datenquelle
   overflow-x: hidden;
 }
 
-#sqhxlnficm .gt_column_spanner_outer {
+#qzlvysyznv .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -355,15 +359,15 @@ Datenquelle
   padding-right: 4px;
 }
 
-#sqhxlnficm .gt_column_spanner_outer:first-child {
+#qzlvysyznv .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#sqhxlnficm .gt_column_spanner_outer:last-child {
+#qzlvysyznv .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#sqhxlnficm .gt_column_spanner {
+#qzlvysyznv .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -375,11 +379,11 @@ Datenquelle
   width: 100%;
 }
 
-#sqhxlnficm .gt_spanner_row {
+#qzlvysyznv .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#sqhxlnficm .gt_group_heading {
+#qzlvysyznv .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -405,7 +409,7 @@ Datenquelle
   text-align: left;
 }
 
-#sqhxlnficm .gt_empty_group_heading {
+#qzlvysyznv .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -420,15 +424,15 @@ Datenquelle
   vertical-align: middle;
 }
 
-#sqhxlnficm .gt_from_md > :first-child {
+#qzlvysyznv .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#sqhxlnficm .gt_from_md > :last-child {
+#qzlvysyznv .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#sqhxlnficm .gt_row {
+#qzlvysyznv .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -447,7 +451,7 @@ Datenquelle
   overflow-x: hidden;
 }
 
-#sqhxlnficm .gt_stub {
+#qzlvysyznv .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -460,7 +464,7 @@ Datenquelle
   padding-right: 5px;
 }
 
-#sqhxlnficm .gt_stub_row_group {
+#qzlvysyznv .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -474,15 +478,15 @@ Datenquelle
   vertical-align: top;
 }
 
-#sqhxlnficm .gt_row_group_first td {
+#qzlvysyznv .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#sqhxlnficm .gt_row_group_first th {
+#qzlvysyznv .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#sqhxlnficm .gt_summary_row {
+#qzlvysyznv .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -492,16 +496,16 @@ Datenquelle
   padding-right: 5px;
 }
 
-#sqhxlnficm .gt_first_summary_row {
+#qzlvysyznv .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_first_summary_row.thick {
+#qzlvysyznv .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#sqhxlnficm .gt_last_summary_row {
+#qzlvysyznv .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -511,7 +515,7 @@ Datenquelle
   border-bottom-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_grand_summary_row {
+#qzlvysyznv .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -521,7 +525,7 @@ Datenquelle
   padding-right: 5px;
 }
 
-#sqhxlnficm .gt_first_grand_summary_row {
+#qzlvysyznv .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -531,7 +535,7 @@ Datenquelle
   border-top-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_last_grand_summary_row_top {
+#qzlvysyznv .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -541,11 +545,11 @@ Datenquelle
   border-bottom-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_striped {
+#qzlvysyznv .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#sqhxlnficm .gt_table_body {
+#qzlvysyznv .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -554,7 +558,7 @@ Datenquelle
   border-bottom-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_footnotes {
+#qzlvysyznv .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -568,7 +572,7 @@ Datenquelle
   border-right-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_footnote {
+#qzlvysyznv .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -577,7 +581,7 @@ Datenquelle
   padding-right: 5px;
 }
 
-#sqhxlnficm .gt_sourcenotes {
+#qzlvysyznv .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -591,7 +595,7 @@ Datenquelle
   border-right-color: #D3D3D3;
 }
 
-#sqhxlnficm .gt_sourcenote {
+#qzlvysyznv .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -599,72 +603,72 @@ Datenquelle
   padding-right: 5px;
 }
 
-#sqhxlnficm .gt_left {
+#qzlvysyznv .gt_left {
   text-align: left;
 }
 
-#sqhxlnficm .gt_center {
+#qzlvysyznv .gt_center {
   text-align: center;
 }
 
-#sqhxlnficm .gt_right {
+#qzlvysyznv .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#sqhxlnficm .gt_font_normal {
+#qzlvysyznv .gt_font_normal {
   font-weight: normal;
 }
 
-#sqhxlnficm .gt_font_bold {
+#qzlvysyznv .gt_font_bold {
   font-weight: bold;
 }
 
-#sqhxlnficm .gt_font_italic {
+#qzlvysyznv .gt_font_italic {
   font-style: italic;
 }
 
-#sqhxlnficm .gt_super {
+#qzlvysyznv .gt_super {
   font-size: 65%;
 }
 
-#sqhxlnficm .gt_footnote_marks {
+#qzlvysyznv .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#sqhxlnficm .gt_asterisk {
+#qzlvysyznv .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#sqhxlnficm .gt_indent_1 {
+#qzlvysyznv .gt_indent_1 {
   text-indent: 5px;
 }
 
-#sqhxlnficm .gt_indent_2 {
+#qzlvysyznv .gt_indent_2 {
   text-indent: 10px;
 }
 
-#sqhxlnficm .gt_indent_3 {
+#qzlvysyznv .gt_indent_3 {
   text-indent: 15px;
 }
 
-#sqhxlnficm .gt_indent_4 {
+#qzlvysyznv .gt_indent_4 {
   text-indent: 20px;
 }
 
-#sqhxlnficm .gt_indent_5 {
+#qzlvysyznv .gt_indent_5 {
   text-indent: 25px;
 }
 
-#sqhxlnficm .katex-display {
+#qzlvysyznv .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#sqhxlnficm div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qzlvysyznv div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -732,44 +736,17 @@ Univariat und bivariat
 <p>Die dargestellten Abbildungen demonstrieren die univariate Visualisierung beider Verteilungen (separate Histogramme für DAP_IQ und WPPSI) und anschließend die Überführung der beiden univariaten Verteilungen in einen 2-dimensionalen Raum, also das bivariate Streudiagramm (scatter plot) der beiden Variablen (DAP_IQ und WPPSI).</p>
 </div>
 </div>
+<iframe src="visualisierung.html" width="100%" height="700px" frameborder="0"></iframe>
 <div class="grid">
 <div class="g-col-6">
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># geom_density(col = "blue") +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>             width <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>             <span class="co"># height = 0.001,</span></span>
-<span>             shape <span class="op">=</span> <span class="fl">21</span>,</span>
-<span>             <span class="co"># alpha = 0.3,</span></span>
-<span>             size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>             fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="g-col-6">
-<div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>              width <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>              height <span class="op">=</span> <span class="fl">0.002</span>,</span>
-<span>              shape <span class="op">=</span> <span class="fl">21</span>,</span>
-<span>              alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span>              size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>              fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># ylab("n") +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span>, y <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -779,22 +756,15 @@ Univariat und bivariat
 </div>
 </div>
 </div>
-</div>
-<div class="grid">
 <div class="g-col-6">
 <div class="cell">
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># geom_density(col = "blue") +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>             width <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>             <span class="co"># height = 0.001,</span></span>
-<span>             shape <span class="op">=</span> <span class="fl">21</span>,</span>
-<span>             <span class="co"># alpha = 0.3,</span></span>
-<span>             size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>             fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span>, y <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="co">#</span></span>
+<span>  <span class="co">#</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -804,20 +774,25 @@ Univariat und bivariat
 </div>
 </div>
 </div>
+</div>
+<div class="grid">
 <div class="g-col-6">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/MultivariateNormal.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://commons.wikimedia.org/wiki/File:MultivariateNormal.png" class="uri">https://commons.wikimedia.org/wiki/File:MultivariateNormal.png</a> by Bscan</figcaption></figure>
+</div>
+</div>
+<div class="g-col-6">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure"><p><img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Multivariate_normal_density.png" class="img-fluid figure-img"></p>
+<figcaption><a href="https://commons.wikimedia.org/wiki/File:Multivariate_normal_density.png" class="uri">https://commons.wikimedia.org/wiki/File:Multivariate_normal_density.png</a> by JonskiC</figcaption></figure>
+</div>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">density</span><span class="op">)</span><span class="op">)</span>, fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_density.html">geom_density</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
-<span>              width <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>              height <span class="op">=</span> <span class="fl">0.002</span>,</span>
-<span>              shape <span class="op">=</span> <span class="fl">21</span>,</span>
-<span>              alpha <span class="op">=</span> <span class="fl">0.3</span>,</span>
-<span>              size <span class="op">=</span> <span class="fl">3</span>,</span>
-<span>              fill <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># ylab("n") +</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span>, y <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
@@ -826,278 +801,12 @@ Univariat und bivariat
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># coord_flip() +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"gray"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># coord_flip() +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_histogram</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ylab</a></span><span class="op">(</span><span class="st">"n"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co"># coord_flip() +</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-6">
-<div class="cell">
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span>, y <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div class="grid">
-<div class="g-col-6">
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://gganimate.com">gganimate</a></span><span class="op">)</span></span>
-<span><span class="co"># Assuming your data is called 'DATA'</span></span>
-<span><span class="co"># Create animation data with transition states</span></span>
-<span><span class="va">create_animation_data</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">n_frames</span> <span class="op">=</span> <span class="fl">50</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  </span>
-<span>  <span class="co"># Create frames for the transition</span></span>
-<span>  <span class="va">frames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span><span class="op">)</span></span>
-<span>  </span>
-<span>  <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">0</span><span class="op">:</span><span class="va">n_frames</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="co"># Calculate transition progress (0 = marginal, 1 = scatter)</span></span>
-<span>    <span class="va">progress</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">/</span> <span class="va">n_frames</span></span>
-<span>    </span>
-<span>    <span class="co"># Smooth easing function (ease-in-out)</span></span>
-<span>    <span class="va">eased_progress</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="va">progress</span><span class="op">^</span><span class="fl">2</span> <span class="op">-</span> <span class="fl">2</span> <span class="op">*</span> <span class="va">progress</span><span class="op">^</span><span class="fl">3</span></span>
-<span>    </span>
-<span>    <span class="va">frame_data</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>        <span class="co"># Interpolate between marginal positions and actual positions</span></span>
-<span>        x_pos <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">eased_progress</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">eased_progress</span> <span class="op">*</span> <span class="va">DAP_IQ</span>,</span>
-<span>        y_pos <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">eased_progress</span><span class="op">)</span> <span class="op">*</span> <span class="va">WPPSI</span> <span class="op">+</span> <span class="va">eased_progress</span> <span class="op">*</span> <span class="va">WPPSI</span>,</span>
-<span>        frame <span class="op">=</span> <span class="va">i</span>,</span>
-<span>        state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"Marginal Y"</span>, </span>
-<span>                      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="va">n_frames</span>, <span class="st">"Scatter"</span>, <span class="st">"Transition"</span><span class="op">)</span><span class="op">)</span></span>
-<span>      <span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="co"># Add marginal X distribution points</span></span>
-<span>    <span class="va">frame_data_x</span> <span class="op">&lt;-</span> <span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>      <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
-<span>        x_pos <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">eased_progress</span><span class="op">)</span> <span class="op">*</span> <span class="va">DAP_IQ</span> <span class="op">+</span> <span class="va">eased_progress</span> <span class="op">*</span> <span class="va">DAP_IQ</span>,</span>
-<span>        y_pos <span class="op">=</span> <span class="op">(</span><span class="fl">1</span> <span class="op">-</span> <span class="va">eased_progress</span><span class="op">)</span> <span class="op">*</span> <span class="fl">0</span> <span class="op">+</span> <span class="va">eased_progress</span> <span class="op">*</span> <span class="va">WPPSI</span>,</span>
-<span>        frame <span class="op">=</span> <span class="va">i</span>,</span>
-<span>        state <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="fl">0</span>, <span class="st">"Marginal X"</span>, </span>
-<span>                      <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">i</span> <span class="op">==</span> <span class="va">n_frames</span>, <span class="st">"Scatter"</span>, <span class="st">"Transition"</span><span class="op">)</span><span class="op">)</span></span>
-<span>      <span class="op">)</span></span>
-<span>    </span>
-<span>    <span class="va">frames</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">frames</span>, <span class="va">frame_data</span>, <span class="va">frame_data_x</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span>  </span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">frames</span><span class="op">)</span></span>
-<span><span class="op">}</span></span>
-<span></span>
-<span><span class="co"># Create the animation data</span></span>
-<span><span class="co"># Replace 'DATA' with your actual dataset name</span></span>
-<span><span class="va">anim_data</span> <span class="op">&lt;-</span> <span class="fu">create_animation_data</span><span class="op">(</span><span class="va">DATA</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Create the animated plot</span></span>
-<span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">anim_data</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x_pos</span>, y <span class="op">=</span> <span class="va">y_pos</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span>, size <span class="op">=</span> <span class="fl">1.5</span>, alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span></span>
-<span>    <span class="co">#title = "Transition from Marginal Distributions to Scatter Plot",</span></span>
-<span>    <span class="co">#subtitle = "Frame: {closest_state}",</span></span>
-<span>    x <span class="op">=</span> <span class="st">"DAP_IQ"</span>,</span>
-<span>    y <span class="op">=</span> <span class="st">"WPPSI"</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://gganimate.com/reference/transition_states.html">transition_states</a></span><span class="op">(</span><span class="va">frame</span>,</span>
-<span>                   transition_length <span class="op">=</span> <span class="fl">5</span>,</span>
-<span>                   state_length <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://gganimate.com/reference/ease_aes.html">ease_aes</a></span><span class="op">(</span><span class="st">'cubic-in-out'</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Render the animation</span></span>
-<span><span class="va">anim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://gganimate.com/reference/animate.html">animate</a></span><span class="op">(</span><span class="va">p</span>,</span>
-<span>                fps <span class="op">=</span> <span class="fl">40</span>, </span>
-<span>                duration <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>                renderer <span class="op">=</span> <span class="fu"><a href="https://gganimate.com/reference/renderers.html">gifski_renderer</a></span><span class="op">(</span><span class="st">"marginal_to_scatter.gif"</span><span class="op">)</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">anim</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-15-1.gif" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="g-col-6">
-<div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">DATA</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">DAP_IQ</span>, y <span class="op">=</span> <span class="va">WPPSI</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>col <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">xlim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">150</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">140</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="co">#</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_classic</a></span><span class="op">(</span>base_size <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details><div class="cell-output-display">
-<div>
-<figure class="figure"><p><img src="index_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</div>
-<p>BIVARIATE DICHTE</p>
 <p><a href="https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html" class="uri">https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html</a></p>
 <p><a href="https://exts.ggplot2.tidyverse.org/gallery/" class="uri">https://exts.ggplot2.tidyverse.org/gallery/</a></p>
 <p><a href="https://bookdown.org/roback/bookdown-BeyondMLR/" class="uri">https://bookdown.org/roback/bookdown-BeyondMLR/</a></p>
 </section></section><section id="r-session-info" class="level2"><h2 class="anchored" data-anchor-id="r-session-info">R Session Info</h2>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://devtools.r-lib.org/">devtools</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://sessioninfo.r-lib.org/reference/session_info.html">session_info</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="In die Zwischenablage kopieren" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>─ Session info ───────────────────────────────────────────────────────────────
@@ -1115,81 +824,74 @@ Univariat und bivariat
  quarto   NA @ C:\\PROGRA~1\\RStudio\\RESOUR~1\\app\\bin\\quarto\\bin\\quarto.exe
 
 ─ Packages ───────────────────────────────────────────────────────────────────
- package      * version  date (UTC) lib source
- cachem         1.1.0    2024-05-16 [1] CRAN (R 4.5.0)
- cellranger     1.1.0    2016-07-27 [1] CRAN (R 4.5.0)
- cli            3.6.5    2025-04-23 [1] CRAN (R 4.5.0)
- codetools      0.2-20   2024-03-31 [2] CRAN (R 4.5.0)
- crayon         1.5.3    2024-06-20 [1] CRAN (R 4.5.0)
- devtools     * 2.4.5    2022-10-11 [1] CRAN (R 4.5.0)
- digest         0.6.37   2024-08-19 [1] CRAN (R 4.5.0)
- dplyr        * 1.1.4    2023-11-17 [1] CRAN (R 4.5.0)
- ellipsis       0.3.2    2021-04-29 [1] CRAN (R 4.5.0)
- evaluate       1.0.3    2025-01-10 [1] CRAN (R 4.5.0)
- farver         2.1.2    2024-05-13 [1] CRAN (R 4.5.0)
- fastmap        1.2.0    2024-05-15 [1] CRAN (R 4.5.0)
- forcats      * 1.0.0    2023-01-29 [1] CRAN (R 4.5.0)
- fs             1.6.6    2025-04-12 [1] CRAN (R 4.5.0)
- generics       0.1.4    2025-05-09 [1] CRAN (R 4.5.0)
- gganimate    * 1.0.9    2024-02-27 [1] CRAN (R 4.5.0)
- ggplot2      * 3.5.2    2025-04-09 [1] CRAN (R 4.5.0)
- gifski         1.32.0-2 2025-03-18 [1] CRAN (R 4.5.0)
- glue           1.8.0    2024-09-30 [1] CRAN (R 4.5.0)
- gt           * 1.0.0    2025-04-05 [1] CRAN (R 4.5.0)
- gtable         0.3.6    2024-10-25 [1] CRAN (R 4.5.0)
- hms            1.1.3    2023-03-21 [1] CRAN (R 4.5.0)
- htmltools      0.5.8.1  2024-04-04 [1] CRAN (R 4.5.0)
- htmlwidgets    1.6.4    2023-12-06 [1] CRAN (R 4.5.0)
- httpuv         1.6.16   2025-04-16 [1] CRAN (R 4.5.0)
- jsonlite       2.0.0    2025-03-27 [1] CRAN (R 4.5.0)
- knitr          1.50     2025-03-16 [1] CRAN (R 4.5.0)
- labeling       0.4.3    2023-08-29 [1] CRAN (R 4.5.0)
- later          1.4.2    2025-04-08 [1] CRAN (R 4.5.0)
- lifecycle      1.0.4    2023-11-07 [1] CRAN (R 4.5.0)
- lubridate    * 1.9.4    2024-12-08 [1] CRAN (R 4.5.0)
- magrittr       2.0.3    2022-03-30 [1] CRAN (R 4.5.0)
- memoise        2.0.1    2021-11-26 [1] CRAN (R 4.5.0)
- mime           0.13     2025-03-17 [1] CRAN (R 4.5.0)
- miniUI         0.1.2    2025-04-17 [1] CRAN (R 4.5.0)
- pillar         1.10.2   2025-04-05 [1] CRAN (R 4.5.0)
- pkgbuild       1.4.7    2025-03-24 [1] CRAN (R 4.5.0)
- pkgconfig      2.0.3    2019-09-22 [1] CRAN (R 4.5.0)
- pkgload        1.4.0    2024-06-28 [1] CRAN (R 4.5.0)
- prettyunits    1.2.0    2023-09-24 [1] CRAN (R 4.5.0)
- profvis        0.4.0    2024-09-20 [1] CRAN (R 4.5.0)
- progress       1.2.3    2023-12-06 [1] CRAN (R 4.5.0)
- promises       1.3.2    2024-11-28 [1] CRAN (R 4.5.0)
- purrr        * 1.0.4    2025-02-05 [1] CRAN (R 4.5.0)
- R6             2.6.1    2025-02-15 [1] CRAN (R 4.5.0)
- RColorBrewer   1.1-3    2022-04-03 [1] CRAN (R 4.5.0)
- Rcpp           1.0.14   2025-01-12 [1] CRAN (R 4.5.0)
- readr        * 2.1.5    2024-01-10 [1] CRAN (R 4.5.0)
- readxl       * 1.4.5    2025-03-07 [1] CRAN (R 4.5.0)
- remotes        2.5.0    2024-03-17 [1] CRAN (R 4.5.0)
- rlang          1.1.6    2025-04-11 [1] CRAN (R 4.5.0)
- rmarkdown      2.29     2024-11-04 [1] CRAN (R 4.5.0)
- rstudioapi     0.17.1   2024-10-22 [1] CRAN (R 4.5.0)
- sass           0.4.10   2025-04-11 [1] CRAN (R 4.5.0)
- scales         1.4.0    2025-04-24 [1] CRAN (R 4.5.0)
- sessioninfo    1.2.3    2025-02-05 [1] CRAN (R 4.5.0)
- shiny          1.10.0   2024-12-14 [1] CRAN (R 4.5.0)
- stringi        1.8.7    2025-03-27 [1] CRAN (R 4.5.0)
- stringr      * 1.5.1    2023-11-14 [1] CRAN (R 4.5.0)
- tibble       * 3.2.1    2023-03-20 [1] CRAN (R 4.5.0)
- tidyr        * 1.3.1    2024-01-24 [1] CRAN (R 4.5.0)
- tidyselect     1.2.1    2024-03-11 [1] CRAN (R 4.5.0)
- tidyverse    * 2.0.0    2023-02-22 [1] CRAN (R 4.5.0)
- timechange     0.3.0    2024-01-18 [1] CRAN (R 4.5.0)
- tweenr         2.0.3    2024-02-26 [1] CRAN (R 4.5.0)
- tzdb           0.5.0    2025-03-15 [1] CRAN (R 4.5.0)
- urlchecker     1.0.1    2021-11-30 [1] CRAN (R 4.5.0)
- usethis      * 3.1.0    2024-11-26 [1] CRAN (R 4.5.0)
- vctrs          0.6.5    2023-12-01 [1] CRAN (R 4.5.0)
- withr          3.0.2    2024-10-28 [1] CRAN (R 4.5.0)
- xfun           0.52     2025-04-02 [1] CRAN (R 4.5.0)
- xml2           1.3.8    2025-03-14 [1] CRAN (R 4.5.0)
- xtable         1.8-4    2019-04-21 [1] CRAN (R 4.5.0)
- yaml           2.3.10   2024-07-26 [1] CRAN (R 4.5.0)
+ package      * version date (UTC) lib source
+ cachem         1.1.0   2024-05-16 [1] CRAN (R 4.5.0)
+ cellranger     1.1.0   2016-07-27 [1] CRAN (R 4.5.0)
+ cli            3.6.5   2025-04-23 [1] CRAN (R 4.5.0)
+ devtools     * 2.4.5   2022-10-11 [1] CRAN (R 4.5.0)
+ digest         0.6.37  2024-08-19 [1] CRAN (R 4.5.0)
+ dplyr        * 1.1.4   2023-11-17 [1] CRAN (R 4.5.0)
+ ellipsis       0.3.2   2021-04-29 [1] CRAN (R 4.5.0)
+ evaluate       1.0.3   2025-01-10 [1] CRAN (R 4.5.0)
+ farver         2.1.2   2024-05-13 [1] CRAN (R 4.5.0)
+ fastmap        1.2.0   2024-05-15 [1] CRAN (R 4.5.0)
+ forcats      * 1.0.0   2023-01-29 [1] CRAN (R 4.5.0)
+ fs             1.6.6   2025-04-12 [1] CRAN (R 4.5.0)
+ generics       0.1.4   2025-05-09 [1] CRAN (R 4.5.0)
+ ggplot2      * 3.5.2   2025-04-09 [1] CRAN (R 4.5.0)
+ glue           1.8.0   2024-09-30 [1] CRAN (R 4.5.0)
+ gt           * 1.0.0   2025-04-05 [1] CRAN (R 4.5.0)
+ gtable         0.3.6   2024-10-25 [1] CRAN (R 4.5.0)
+ hms            1.1.3   2023-03-21 [1] CRAN (R 4.5.0)
+ htmltools      0.5.8.1 2024-04-04 [1] CRAN (R 4.5.0)
+ htmlwidgets    1.6.4   2023-12-06 [1] CRAN (R 4.5.0)
+ httpuv         1.6.16  2025-04-16 [1] CRAN (R 4.5.0)
+ jsonlite       2.0.0   2025-03-27 [1] CRAN (R 4.5.0)
+ knitr          1.50    2025-03-16 [1] CRAN (R 4.5.0)
+ labeling       0.4.3   2023-08-29 [1] CRAN (R 4.5.0)
+ later          1.4.2   2025-04-08 [1] CRAN (R 4.5.0)
+ lifecycle      1.0.4   2023-11-07 [1] CRAN (R 4.5.0)
+ lubridate    * 1.9.4   2024-12-08 [1] CRAN (R 4.5.0)
+ magrittr       2.0.3   2022-03-30 [1] CRAN (R 4.5.0)
+ memoise        2.0.1   2021-11-26 [1] CRAN (R 4.5.0)
+ mime           0.13    2025-03-17 [1] CRAN (R 4.5.0)
+ miniUI         0.1.2   2025-04-17 [1] CRAN (R 4.5.0)
+ pillar         1.10.2  2025-04-05 [1] CRAN (R 4.5.0)
+ pkgbuild       1.4.7   2025-03-24 [1] CRAN (R 4.5.0)
+ pkgconfig      2.0.3   2019-09-22 [1] CRAN (R 4.5.0)
+ pkgload        1.4.0   2024-06-28 [1] CRAN (R 4.5.0)
+ profvis        0.4.0   2024-09-20 [1] CRAN (R 4.5.0)
+ promises       1.3.2   2024-11-28 [1] CRAN (R 4.5.0)
+ purrr        * 1.0.4   2025-02-05 [1] CRAN (R 4.5.0)
+ R6             2.6.1   2025-02-15 [1] CRAN (R 4.5.0)
+ RColorBrewer   1.1-3   2022-04-03 [1] CRAN (R 4.5.0)
+ Rcpp           1.0.14  2025-01-12 [1] CRAN (R 4.5.0)
+ readr        * 2.1.5   2024-01-10 [1] CRAN (R 4.5.0)
+ readxl       * 1.4.5   2025-03-07 [1] CRAN (R 4.5.0)
+ remotes        2.5.0   2024-03-17 [1] CRAN (R 4.5.0)
+ rlang          1.1.6   2025-04-11 [1] CRAN (R 4.5.0)
+ rmarkdown      2.29    2024-11-04 [1] CRAN (R 4.5.0)
+ rstudioapi     0.17.1  2024-10-22 [1] CRAN (R 4.5.0)
+ sass           0.4.10  2025-04-11 [1] CRAN (R 4.5.0)
+ scales         1.4.0   2025-04-24 [1] CRAN (R 4.5.0)
+ sessioninfo    1.2.3   2025-02-05 [1] CRAN (R 4.5.0)
+ shiny          1.10.0  2024-12-14 [1] CRAN (R 4.5.0)
+ stringi        1.8.7   2025-03-27 [1] CRAN (R 4.5.0)
+ stringr      * 1.5.1   2023-11-14 [1] CRAN (R 4.5.0)
+ tibble       * 3.2.1   2023-03-20 [1] CRAN (R 4.5.0)
+ tidyr        * 1.3.1   2024-01-24 [1] CRAN (R 4.5.0)
+ tidyselect     1.2.1   2024-03-11 [1] CRAN (R 4.5.0)
+ tidyverse    * 2.0.0   2023-02-22 [1] CRAN (R 4.5.0)
+ timechange     0.3.0   2024-01-18 [1] CRAN (R 4.5.0)
+ tzdb           0.5.0   2025-03-15 [1] CRAN (R 4.5.0)
+ urlchecker     1.0.1   2021-11-30 [1] CRAN (R 4.5.0)
+ usethis      * 3.1.0   2024-11-26 [1] CRAN (R 4.5.0)
+ vctrs          0.6.5   2023-12-01 [1] CRAN (R 4.5.0)
+ withr          3.0.2   2024-10-28 [1] CRAN (R 4.5.0)
+ xfun           0.52    2025-04-02 [1] CRAN (R 4.5.0)
+ xml2           1.3.8   2025-03-14 [1] CRAN (R 4.5.0)
+ xtable         1.8-4   2019-04-21 [1] CRAN (R 4.5.0)
+ yaml           2.3.10  2024-07-26 [1] CRAN (R 4.5.0)
 
  [1] C:/Users/Graduiertenschule/AppData/Local/R/win-library/4.5
  [2] C:/Program Files/R/R-4.5.0/library
@@ -1198,7 +900,7 @@ Univariat und bivariat
 ──────────────────────────────────────────────────────────────────────────────</code></pre>
 </div>
 </div>
-</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Wiederverwendung</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/deed.de">CC BY 4.0</a></div></div></section></div></main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
+</section><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Wiederverwendung</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.de">CC BY-SA 4.0</a></div></div></section></div></main><!-- /main column --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");

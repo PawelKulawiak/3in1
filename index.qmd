@@ -4,7 +4,7 @@ subtitle: "Einführung in Korrelation, Regression und Multilevel-Analyse mit R"
 format: html
 lang: de
 date: today
-license: "CC BY"
+license: "CC BY-SA"
 html-table-processing: none
 link-external-newwindow: true
 toc: true
@@ -46,9 +46,6 @@ author:
 ```
 
 ## Motivation
-```{=html}
-<iframe src="test.html" width="100%" height="600px" frameborder="0"></iframe>
-```
 
 :::::: {.grid}
 
@@ -78,6 +75,14 @@ Series Editor’s Note (David A. Kenny)
 
 ::::::
 
+## Pakete
+
+```{r}
+library(tidyverse) # https://www.tidyverse.org/
+library(readxl) # https://readxl.tidyverse.org/ (Teil von tidyverse)
+library(gt) # https://gt.rstudio.com/
+```
+
 ## Korrelation
 
 ::::::: callout-tip
@@ -92,8 +97,8 @@ Imuta K, Scarf D, Pharo H, Hayne H (2013) Drawing a Close to the Use of Human Fi
 
 Variablen:
 
--   DAP_IQ: [Draw-A-Person Intellectual Ability Test](https://en.wikipedia.org/wiki/Draw-a-Person_test) ([Mann-Zeichen-Test](https://www.testzentrale.de/shop/der-mann-zeichen-test.html))
--   WPPSI: [Wechsler Preschool and Primary Scale of Intelligence](https://de.wikipedia.org/wiki/Wechsler_Preschool_and_Primary_Scale_of_Intelligence)
+-   **DAP_IQ**: [Draw-A-Person Intellectual Ability Test](https://en.wikipedia.org/wiki/Draw-a-Person_test) ([Mann-Zeichen-Test](https://www.testzentrale.de/shop/der-mann-zeichen-test.html))
+-   **WPPSI**: [Wechsler Preschool and Primary Scale of Intelligence](https://de.wikipedia.org/wiki/Wechsler_Preschool_and_Primary_Scale_of_Intelligence)
 
 \
 
@@ -113,10 +118,6 @@ Variablen:
 :::::::
 
 ```{r}
-library(readxl)
-library(gt)
-library(tidyverse)
-
 DATA <-
   read_xlsx("DATA_doi_10.1371_journal.pone.0058991.xlsx")
 
@@ -133,301 +134,56 @@ head(DATA) %>%
 Die dargestellten Abbildungen demonstrieren die univariate Visualisierung beider Verteilungen (separate Histogramme für DAP_IQ und WPPSI) und anschließend die Überführung der beiden univariaten Verteilungen in einen 2-dimensionalen Raum, also das bivariate Streudiagramm (scatter plot) der beiden Variablen (DAP_IQ und WPPSI).
 :::
 
-:::::: {.grid}
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = DAP_IQ)) + 
-  geom_histogram(fill = "gray") +
-  # geom_density(col = "blue") +
-  geom_point(aes(y = 0),
-             width = 0,
-             # height = 0.001,
-             shape = 21,
-             # alpha = 0.3,
-             size = 3,
-             fill = "blue") +
-  ylab("n") +
-  theme_classic(base_size = 12)
+```{=html}
+<iframe src="visualisierung.html" width="100%" height="700px" frameborder="0"></iframe>
 ```
-:::
-
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = DAP_IQ)) + 
-  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
-  geom_density(col = "blue") +
-  geom_jitter(aes(y = 0),
-              width = 0,
-              height = 0.002,
-              shape = 21,
-              alpha = 0.3,
-              size = 3,
-              fill = "blue") +
-  # ylab("n") +
-  theme_classic(base_size = 12)
-```
-:::
-::::::
 
 :::::: {.grid}
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = WPPSI)) + 
-  geom_histogram(fill = "gray") +
-  # geom_density(col = "blue") +
-  geom_point(aes(y = 0),
-             width = 0,
-             # height = 0.001,
-             shape = 21,
-             # alpha = 0.3,
-             size = 3,
-             fill = "blue") +
-  ylab("n") +
-  theme_classic(base_size = 12)
-```
-:::
 
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = WPPSI)) + 
-  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
-  geom_density(col = "blue") +
-  geom_jitter(aes(y = 0),
-              width = 0,
-              height = 0.002,
-              shape = 21,
-              alpha = 0.3,
-              size = 3,
-              fill = "blue") +
-  # ylab("n") +
-  theme_classic(base_size = 12)
-```
-:::
-::::::
-
-:::::: {.grid}
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = WPPSI)) + 
-  geom_histogram(fill = "gray") +
-  geom_point(aes(y = 0), col = "blue") +
-  ylab("n") +
-  theme_classic(base_size = 12)
-```
-:::
-
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = DAP_IQ)) + 
-  geom_histogram(fill = "gray") +
-  geom_point(aes(y = 0), col = "blue") +
-  ylab("n") +
-  theme_classic(base_size = 12)
-```
-:::
-::::::
-
-:::::: {.grid}
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = WPPSI)) + 
-  geom_histogram(fill = "gray") +
-  geom_point(aes(y = 0), col = "blue") +
-  ylab("n") +
-  coord_flip() +
-  theme_classic(base_size = 12)
-```
-:::
-
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = DAP_IQ)) + 
-  geom_histogram(fill = "gray") +
-  geom_point(aes(y = 0), col = "blue") +
-  ylab("n") +
-  # coord_flip() +
-  theme_classic(base_size = 12)
-```
-:::
-::::::
-
-:::::: {.grid}
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = WPPSI)) + 
-  geom_histogram(fill = "gray") +
-  geom_point(aes(y = 0), col = "blue") +
-  ylab("n") +
-  xlim(c(0, 140)) +
-  coord_flip() +
-  theme_classic(base_size = 12)
-```
-:::
-
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = DAP_IQ)) + 
-  geom_histogram(fill = "gray") +
-  geom_point(aes(y = 0), col = "blue") +
-  xlim(c(0, 150)) +
-  ylab("n") +
-  # coord_flip() +
-  theme_classic(base_size = 12)
-```
-:::
-::::::
-
-:::::: {.grid}
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = WPPSI)) + 
-  geom_histogram(fill = "white") +
-  geom_point(aes(y = 0), col = "blue") +
-  ylab("n") +
-  xlim(c(0, 140)) +
-  coord_flip() +
-  theme_classic(base_size = 12)
-```
-:::
-
-::: {.g-col-6}
-```{r}
-DATA %>%
-  ggplot(aes(x = DAP_IQ)) + 
-  geom_histogram(fill = "white") +
-  geom_point(aes(y = 0), col = "blue") +
-  xlim(c(0, 150)) +
-  ylab("n") +
-  # coord_flip() +
-  theme_classic(base_size = 12)
-```
-:::
-::::::
-
-
-:::::: {.grid}
 ::: {.g-col-6}
 ```{r}
 DATA %>%
   ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
   geom_point(aes(y = 0), col = "blue") +
   geom_point(aes(x = 0), col = "blue") +
+  geom_point(col = "blue") +
   xlim(c(0, 150)) +
   ylim(c(0, 140)) +
   theme_classic(base_size = 12)
 ```
 :::
-::::::
-
-:::::: {.grid}
-::: {.g-col-6}
-
-
-
-```{r}
-#| code-fold: true
-#| cache: true
-
-library(gganimate)
-# Assuming your data is called 'DATA'
-# Create animation data with transition states
-create_animation_data <- function(data, n_frames = 50) {
-  
-  # Create frames for the transition
-  frames <- data.frame()
-  
-  for(i in 0:n_frames) {
-    # Calculate transition progress (0 = marginal, 1 = scatter)
-    progress <- i / n_frames
-    
-    # Smooth easing function (ease-in-out)
-    eased_progress <- 3 * progress^2 - 2 * progress^3
-    
-    frame_data <- data %>%
-      mutate(
-        # Interpolate between marginal positions and actual positions
-        x_pos = (1 - eased_progress) * 0 + eased_progress * DAP_IQ,
-        y_pos = (1 - eased_progress) * WPPSI + eased_progress * WPPSI,
-        frame = i,
-        state = ifelse(i == 0, "Marginal Y", 
-                      ifelse(i == n_frames, "Scatter", "Transition"))
-      )
-    
-    # Add marginal X distribution points
-    frame_data_x <- data %>%
-      mutate(
-        x_pos = (1 - eased_progress) * DAP_IQ + eased_progress * DAP_IQ,
-        y_pos = (1 - eased_progress) * 0 + eased_progress * WPPSI,
-        frame = i,
-        state = ifelse(i == 0, "Marginal X", 
-                      ifelse(i == n_frames, "Scatter", "Transition"))
-      )
-    
-    frames <- rbind(frames, frame_data, frame_data_x)
-  }
-  
-  return(frames)
-}
-
-# Create the animation data
-# Replace 'DATA' with your actual dataset name
-anim_data <- create_animation_data(DATA)
-
-# Create the animated plot
-p <- ggplot(anim_data, aes(x = x_pos, y = y_pos)) +
-  geom_point(col = "blue", size = 1.5, alpha = 0.7) +
-  xlim(c(0, 150)) +
-  ylim(c(0, 140)) +
-  labs(
-    #title = "Transition from Marginal Distributions to Scatter Plot",
-    #subtitle = "Frame: {closest_state}",
-    x = "DAP_IQ",
-    y = "WPPSI"
-  ) +
-  theme_classic(base_size = 12) +
-  transition_states(frame,
-                   transition_length = 5,
-                   state_length = 5) +
-  ease_aes('cubic-in-out')
-
-# Render the animation
-anim <- animate(p,
-                fps = 40, 
-                duration = 20,
-                renderer = gifski_renderer("marginal_to_scatter.gif"))
-
-anim
-
-```
-:::
 
 ::: {.g-col-6}
 ```{r}
-#| code-fold: true
 DATA %>%
   ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
   geom_point(col = "blue") +
   xlim(c(0, 150)) +
   ylim(c(0, 140)) +
   #
+  #
   theme_classic(base_size = 12)
 ```
 :::
 ::::::
 
+:::::: {.grid}
 
-BIVARIATE DICHTE
+::: {.g-col-6}
+![<https://commons.wikimedia.org/wiki/File:MultivariateNormal.png> by Bscan](https://upload.wikimedia.org/wikipedia/commons/8/8e/MultivariateNormal.png)
+:::
+
+::: {.g-col-6}
+![<https://commons.wikimedia.org/wiki/File:Multivariate_normal_density.png> by JonskiC](https://upload.wikimedia.org/wikipedia/commons/5/59/Multivariate_normal_density.png)
+:::
+::::::
+
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  theme_classic(base_size = 12)
+```
 
 <https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html>
 

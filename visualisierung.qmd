@@ -1,0 +1,652 @@
+---
+format:
+  revealjs:
+    width: "100%"
+    height: "100%"
+embed-resources: true
+---
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+DATA <-
+  read_xlsx("DATA_doi_10.1371_journal.pone.0058991.xlsx")
+```
+
+
+##
+
+Histogramm mit Dichte (DAP_IQ)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  # geom_density(col = "blue") +
+  geom_point(aes(y = 0),
+             width = 0,
+             # height = 0.001,
+             shape = 21,
+             # alpha = 0.3,
+             size = 3,
+             fill = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
+  geom_density(col = "blue") +
+  geom_jitter(aes(y = 0),
+              width = 0,
+              height = 0.002,
+              shape = 21,
+              alpha = 0.3,
+              size = 3,
+              fill = "blue") +
+  # ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+::::::
+
+##
+
+Histogramm mit Dichte und Boxplot (DAP_IQ)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  # geom_density(col = "blue") +
+  geom_point(aes(y = 0),
+             width = 0,
+             # height = 0.001,
+             shape = 21,
+             # alpha = 0.3,
+             size = 3,
+             fill = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
+  geom_boxplot(aes(y = -0.005), width = 0.002, fill = "gray") +
+  geom_density(col = "blue") +
+  geom_jitter(aes(y = 0),
+              width = 0,
+              height = 0.002,
+              shape = 21,
+              alpha = 0.3,
+              size = 3,
+              fill = "blue") +
+  # ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+::::::
+
+##
+
+Histogramm mit Dichte (WPPSI)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  # geom_density(col = "blue") +
+  geom_point(aes(y = 0),
+             width = 0,
+             # height = 0.001,
+             shape = 21,
+             # alpha = 0.3,
+             size = 3,
+             fill = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
+  geom_density(col = "blue") +
+  geom_jitter(aes(y = 0),
+              width = 0,
+              height = 0.002,
+              shape = 21,
+              alpha = 0.3,
+              size = 3,
+              fill = "blue") +
+  # ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+::::::
+
+##
+
+Histogramm mit Dichte und Boxplot (WPPSI)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  # geom_density(col = "blue") +
+  geom_point(aes(y = 0),
+             width = 0,
+             # height = 0.001,
+             shape = 21,
+             # alpha = 0.3,
+             size = 3,
+             fill = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(aes(y = after_stat(density)), fill = "gray") +
+  geom_boxplot(aes(y = -0.005), width = 0.002, fill = "gray") +
+  geom_density(col = "blue") +
+  geom_jitter(aes(y = 0),
+              width = 0,
+              height = 0.002,
+              shape = 21,
+              alpha = 0.3,
+              size = 3,
+              fill = "blue") +
+  # ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18)
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (ohne y-Achse)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (ohne y-Achse, ohne Histogramm)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (x und y)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.x = element_line(color = "white"),
+    axis.text.x = element_text(color = "white"),
+    axis.ticks.x = element_line(color = "white"),
+    axis.title.x = element_text(color = "white")
+  ) +
+  coord_flip()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (x und y)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.x = element_line(color = "white"),
+    axis.text.x = element_text(color = "white"),
+    axis.ticks.x = element_line(color = "white"),
+    axis.title.x = element_text(color = "white")
+  ) +
+  coord_flip()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "gray") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (x und y)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.x = element_line(color = "white"),
+    axis.text.x = element_text(color = "white"),
+    axis.ticks.x = element_line(color = "white"),
+    axis.title.x = element_text(color = "white")
+  ) +
+  coord_flip()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (x und y, mit Nullpunkt)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = WPPSI)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  xlim(c(0, 140)) +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.x = element_line(color = "white"),
+    axis.text.x = element_text(color = "white"),
+    axis.ticks.x = element_line(color = "white"),
+    axis.title.x = element_text(color = "white")
+  ) +
+  coord_flip()
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ)) + 
+  geom_histogram(fill = "white") +
+  geom_point(aes(y = 0), col = "blue") +
+  ylab("n") +
+  xlim(c(0, 150)) +
+  theme_classic(base_size = 18) +
+  theme(
+    axis.line.y = element_line(color = "white"),
+    axis.text.y = element_text(color = "white"),
+    axis.ticks.y = element_line(color = "white"),
+    axis.title.y = element_text(color = "white")
+  )
+```
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (x und y, mit Nullpunkt/Koordinatenursprung)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(aes(y = 0), col = "blue") +
+  geom_point(aes(x = 0), col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+:::
+::::::
+
+##
+
+WPPSI und DAP_IQ (x und y, mit Nullpunkt/Koordinatenursprung)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(aes(y = 0), col = "blue") +
+  geom_point(aes(x = 0), col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+#| cache: true
+
+library(gganimate)
+# Assuming your data is called 'DATA'
+# Create animation data with transition states
+create_animation_data <- function(data, n_frames = 50) {
+  
+  # Create frames for the transition
+  frames <- data.frame()
+  
+  for(i in 0:n_frames) {
+    # Calculate transition progress (0 = marginal, 1 = scatter)
+    progress <- i / n_frames
+    
+    # Smooth easing function (ease-in-out)
+    eased_progress <- 3 * progress^2 - 2 * progress^3
+    
+    frame_data <- data %>%
+      mutate(
+        # Interpolate between marginal positions and actual positions
+        x_pos = (1 - eased_progress) * 0 + eased_progress * DAP_IQ,
+        y_pos = (1 - eased_progress) * WPPSI + eased_progress * WPPSI,
+        frame = i,
+        state = ifelse(i == 0, "Marginal Y", 
+                      ifelse(i == n_frames, "Scatter", "Transition"))
+      )
+    
+    # Add marginal X distribution points
+    frame_data_x <- data %>%
+      mutate(
+        x_pos = (1 - eased_progress) * DAP_IQ + eased_progress * DAP_IQ,
+        y_pos = (1 - eased_progress) * 0 + eased_progress * WPPSI,
+        frame = i,
+        state = ifelse(i == 0, "Marginal X", 
+                      ifelse(i == n_frames, "Scatter", "Transition"))
+      )
+    
+    frames <- rbind(frames, frame_data, frame_data_x)
+  }
+  
+  return(frames)
+}
+
+# Create the animation data
+# Replace 'DATA' with your actual dataset name
+anim_data <- create_animation_data(DATA)
+
+# Create the animated plot
+p <- ggplot(anim_data, aes(x = x_pos, y = y_pos)) +
+  geom_point(col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  labs(
+    #title = "Transition from Marginal Distributions to Scatter Plot",
+    #subtitle = "Frame: {closest_state}",
+    x = "DAP_IQ",
+    y = "WPPSI"
+  ) +
+  theme_classic(base_size = 18) +
+  transition_states(frame,
+                   transition_length = 5,
+                   state_length = 5) +
+  ease_aes('cubic-in-out')
+
+# Render the animation
+anim <- animate(p,
+                fps = 40, 
+                duration = 20,
+                renderer = gifski_renderer("marginal_to_scatter.gif"))
+
+anim
+
+```
+:::
+::::::
+
