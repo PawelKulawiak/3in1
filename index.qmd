@@ -78,9 +78,14 @@ Series Editor’s Note (David A. Kenny)
 ## Pakete
 
 ```{r}
-library(tidyverse) # https://www.tidyverse.org/
-library(readxl) # https://readxl.tidyverse.org/ (Teil von tidyverse)
-library(gt) # https://gt.rstudio.com/
+library(tidyverse)   # https://www.tidyverse.org/
+library(readxl)      # https://readxl.tidyverse.org/ (Teil von tidyverse)
+library(haven)       # https://haven.tidyverse.org/ (Teil von tidyverse)
+library(gt)          # https://gt.rstudio.com/
+library(ggside)      # https://cran.r-project.org/web/packages/ggside/readme/README.html
+library(see)         # https://easystats.github.io/see/
+library(correlation) # https://easystats.github.io/correlation/index.html
+library(sjPlot)      # https://strengejacke.github.io/sjPlot/
 ```
 
 ## Korrelation
@@ -131,7 +136,7 @@ head(DATA) %>%
 
 ::: {.callout-tip}
 ## Univariat und bivariat
-Die dargestellten Abbildungen demonstrieren die univariate Visualisierung beider Verteilungen (separate Histogramme für DAP_IQ und WPPSI) und anschließend die Überführung der beiden univariaten Verteilungen in einen 2-dimensionalen Raum, also das bivariate Streudiagramm (scatter plot) der beiden Variablen (DAP_IQ und WPPSI).
+Die dargestellten Abbildungen demonstrieren die univariate Visualisierung beider Verteilungen (separate Histogramme für DAP_IQ und WPPSI) und anschließend die Überführung der beiden univariaten Verteilungen in einen 2-dimensionalen Raum (2-dimensionale Ebene; x und y), also das bivariate Streudiagramm (scatter plot) der beiden Variablen (DAP_IQ und WPPSI).
 :::
 
 ```{=html}
@@ -144,9 +149,9 @@ Die dargestellten Abbildungen demonstrieren die univariate Visualisierung beider
 ```{r}
 DATA %>%
   ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
   geom_point(aes(y = 0), col = "blue") +
   geom_point(aes(x = 0), col = "blue") +
-  geom_point(col = "blue") +
   xlim(c(0, 150)) +
   ylim(c(0, 140)) +
   theme_classic(base_size = 12)
@@ -158,14 +163,59 @@ DATA %>%
 DATA %>%
   ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
   geom_point(col = "blue") +
+  #
+  #
   xlim(c(0, 150)) +
   ylim(c(0, 140)) +
-  #
-  #
   theme_classic(base_size = 12)
 ```
 :::
 ::::::
+
+:::::: {.grid}
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point(col = "blue") +
+  geom_point(aes(y = 0), col = "blue") +
+  geom_point(aes(x = 0), col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 12) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) 
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  #
+  #
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 12) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) 
+```
+:::
+::::::
+
+
 
 :::::: {.grid}
 
@@ -182,10 +232,868 @@ DATA %>%
 DATA %>%
   ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
   geom_point(col = "blue") +
-  theme_classic(base_size = 12)
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 12) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) 
 ```
 
-<https://indrajeetpatil.github.io/ggstatsplot/reference/ggcorrmat.html>
+::: {.callout-tip}
+## Übung
+**Interpretieren und beschreiben Sie die unterschiedlichen Punktewolken.**
+:::
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| fig-height: 9
+library(faux)
+library(patchwork)
+
+P_1 <-
+  DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Original Data")
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(0), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_2 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data A")
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(0.6), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_3 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data B")
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(0.8), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_4 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data C")
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(-0.6), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_5 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data D")
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(-0.8), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_6 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data E")
+
+(P_1 | P_2) / (P_3 | P_4) / (P_5 | P_6)
+```
+
+::: {.callout-tip collapse="true"}
+## Lösung
+
+```{r}
+#| echo: false
+#| out-width: "100%"
+#| fig-height: 9
+
+P_1 <-
+  DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Original Data",
+       title = paste0("r = ", cor(DATA$DAP_IQ, DATA$WPPSI) %>% round(2)))
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(0), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_2 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data A",
+       title = paste0("r = ", cor(DAT$DAP_IQ, DAT$WPPSI) %>% round(2)))
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(0.6), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_3 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data B",
+       title = paste0("r = ", cor(DAT$DAP_IQ, DAT$WPPSI) %>% round(2)))
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(0.8), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_4 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data C",
+       title = paste0("r = ", cor(DAT$DAP_IQ, DAT$WPPSI) %>% round(2)))
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(-0.6), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_5 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data D",
+       title = paste0("r = ", cor(DAT$DAP_IQ, DAT$WPPSI) %>% round(2)))
+
+set.seed(1988)
+DAT <- rnorm_multi(n = 100, 
+                  mu = c(100, 100),
+                  sd = c(15, 10),
+                  r = c(-0.8), 
+                  varnames = c("DAP_IQ", "WPPSI"),
+                  empirical = FALSE) %>% round()
+
+P_6 <-
+  DAT %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 10) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) +
+  labs(subtitle = "Simulated Data E",
+       title = paste0("r = ", cor(DAT$DAP_IQ, DAT$WPPSI) %>% round(2)))
+
+(P_1 | P_2) / (P_3 | P_4) / (P_5 | P_6)
+```
+---
+
+**Produkt-Moment-Korrelation (*r*) [Bravais-Pearson correlation, Pearson correlation]**
+
+> Nach Cohen (1988) kann *r* als Effektgröße des Zusammenhangs verwendet werden:
+
+> - |*r*| ≈ .1 «schwach»
+> - |*r*| ≈ .3 «mittel»
+> - |*r*| ≈ .5 «stark»
+
+Quelle: <https://dorsch.hogrefe.com/stichwort/produkt-moment-korrelation>
+
+---
+
+![<https://commons.wikimedia.org/wiki/File:Correlation_examples2.svg> by DenisBoigelot](https://upload.wikimedia.org/wikipedia/commons/d/d4/Correlation_examples2.svg){width=100%}
+---
+
+**Interaktives Tool**
+
+<https://rpsychologist.com/correlation/>
+
+---
+
+**Anscombe's quartet**
+
+Anscombe, F. J. (1973). Graphs in Statistical Analysis. The American Statistician, 27(1), 17–21. <https://doi.org/10.1080/00031305.1973.10478966>
+
+> Das Anscombe-Quartett besteht aus vier Mengen von Datenpunkten, die nahezu identische einfache statistische Eigenschaften haben, aber aufgetragen sehr verschieden aussehen. Jede dieser vier Mengen besteht aus elf (x,y)-Punkten. Diese vier Mengen wurden im Jahre 1973 von dem englischen Statistiker Francis Anscombe konstruiert, um die Bedeutung einer graphischen Datenanalyse herauszustellen und die Effekte von Ausreißern zu demonstrieren.
+
+Quelle: <https://de.wikipedia.org/wiki/Anscombe-Quartett>
+
+![<https://en.wikipedia.org/wiki/File:Anscombe%27s_quartet_3.svg> by Schutz](https://upload.wikimedia.org/wikipedia/commons/e/ec/Anscombe%27s_quartet_3.svg)
+:::
+
+::: {.callout-tip}
+## Übung
+**Replikation:**
+
+Visualisieren Sie den Zusammenhang zwischen DAP_IQ und WPPSI (**Streudiagramm mit Histogrammen**).
+
+---
+
+**Übung mit neuen Daten:**
+
+Gibt es einen Zusammenhang zwischen Anzahl der Freunde in der Schule und Gefühlen der Einsamkeit in der Schule?
+
+Visualisieren Sie den Zusammenhang (**Streudiagramm mit Histogrammen**).
+
+Die Daten finden Sie im Paper:
+
+Vyrastekova, J. (2021). Social inclusion of students with special educational needs assessed by the Inclusion of Other in the Self scale. PLOS ONE, 16(4), e0250070. <https://doi.org/10.1371/journal.pone.0250070>
+
+Direkter Download der Daten: 
+
+<https://doi.org/10.1371/journal.pone.0250070.s003>
+
+Direkter Import der Daten:
+
+```{r}
+DATA <-
+  read_sav("https://doi.org/10.1371/journal.pone.0250070.s003")
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Lösung
+```{r}
+DATA %>%
+  ggplot(aes(x = FriendsAtSchool, y = LonelinessSchool)) +
+  geom_point(col = "blue") +
+  geom_xsidedensity(col = "blue", fill = "lightgray") +
+  geom_ysidedensity(col = "blue", fill = "lightgray") +
+  theme_classic(base_size = 12) +
+  theme(ggside.panel.scale.x = 0.2,
+        ggside.panel.scale.y = 0.2,
+        ggside.axis.text = element_blank(),      
+        ggside.axis.ticks = element_blank(),
+        ggside.axis.line = element_blank()) 
+```
+:::
+
+### Berechnung
+
+```{r}
+#| echo: false
+DATA <- read_xlsx("DATA_doi_10.1371_journal.pone.0058991.xlsx")
+```
+
+
+```{r}
+cor.test(DATA$DAP_IQ, DATA$WPPSI, alternative = "greater")
+
+DATA %>%
+  cor_test("DAP_IQ", "WPPSI", alternative = "greater")
+
+DATA %>%
+  cor_test("DAP_IQ", "WPPSI", alternative = "greater") %>%
+  gt() %>% 
+  tab_options(table.align = "left") %>% 
+  fmt_number(decimals = 3) %>%
+  tab_header("Correlation", "Draw-A-Person Intellectual Ability Test & Wechsler Preschool and Primary Scale of Intelligence")
+
+DATA %>%
+  cor_test("DAP_IQ", "WPPSI", alternative = "greater") %>%
+  plot()
+```
+
+::: {.callout-tip}
+## Übung
+Berechnen und visualisieren Sie den Zusammenhang zwischen Anzahl der Freunde in der Schule und Gefühlen der Einsamkeit in der Schule.
+
+**In der Visualisierung soll der nummerische Wert der Korrelation dargestellt sein.**
+
+a)	Analyse mit gesamten Datensatz
+b)	Analyse ohne Ausreißer (Ausreißer entfernen)
+:::
+
+::: {.callout-tip collapse="true"}
+## Lösung
+```{r}
+DATA <-
+  read_sav("https://doi.org/10.1371/journal.pone.0250070.s003")
+
+DATA %>% 
+  cor_test("FriendsAtSchool", "LonelinessSchool") %>%
+  gt() %>% 
+  tab_options(table.align = "left") %>% 
+  fmt_number(decimals = 3)
+```
+:::::: {.grid}
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  #
+  cor_test("FriendsAtSchool", "LonelinessSchool") %>%
+  plot() +
+  #
+  labs(title = "Analyse mit gesamten Datensatz") +
+  theme_classic(base_size = 14)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  filter(FriendsAtSchool < 30) %>% 
+  cor_test("FriendsAtSchool", "LonelinessSchool") %>%
+  plot() +
+  xlim(c(0, 30)) +
+  labs(title = "Analyse ohne Ausreißer") +
+  theme_classic(base_size = 14)
+```
+:::
+::::::
+:::
+
+### Punktbiseriale Korrelation
+
+:::::: {.grid}
+
+::: {.g-col-6}
+
+```{r}
+#| echo: false
+# Create binary x variable
+n <- 100  # total sample size
+x <- c(rep(0, n/2), rep(1, n/2))  # equal groups
+
+# Create metric y variable
+# Group 0: mean = 30, sd = 5
+# Group 1: mean = 50, sd = 5
+# Mean difference = 50 - 30 = 20
+set.seed(1988)
+y <- ifelse(x == 0, 
+            rnorm(n/2, mean = 30 + 10, sd = 8),  # Group 0
+            rnorm(n/2, mean = 60 + 10, sd = 8))  # Group 1
+
+# Create dataframe
+DAT <- data.frame(x = x, y = y)
+
+DAT %>%
+  cor_test("x", "y") %>%
+  plot() +
+  ylim(c(0,100)) +
+  theme_classic(base_size = 16)
+
+```
+:::
+
+::: {.g-col-6}
+
+\ 
+
+> Parametrisches Verfahren zur Bestimmung des Ausmaßes des Zusammenhangs (Korrelation) zwischen einer intervallskalierten Variable und einer dichotomen Variable.
+
+> Die punktbiseriale Korrelation und der t-Test für unabhängige Stichproben sind insofern äquivalente Verfahren, als die Ergebnisse direkt ineinander überführt werden können und der p-Wert (Signifikanztest) für beide Verfahren identisch ist. 
+
+Quelle: <https://dorsch.hogrefe.com/stichwort/punktbiseriale-korrelation>
+
+:::
+::::::
+
+:::::: {.grid}
+
+::: {.g-col-6}
+```{r}
+#| code-fold: true
+DATA %>%
+  filter(FriendsAtSchool < 30) %>%
+  cor_test("h_psycho", "FriendsAtSchool") %>%
+  plot() +
+  theme_classic(base_size = 16)
+```
+:::
+
+::: {.g-col-6}
+```{r}
+#| code-fold: true
+DATA %>%
+  filter(FriendsAtSchool < 30) %>%
+  ggplot(aes(x = as_factor(h_psycho), y = FriendsAtSchool)) +
+  geom_boxplot(fill = "lightgray") +
+  geom_jitter(width = 0.1,
+              height = 0,
+              shape = 21,
+              alpha = 0.2,
+              size = 4,
+              fill = "blue") +
+  stat_summary(fun = mean, 
+               geom = "line", 
+               aes(group = "x"), 
+               color = "blue", 
+               linewidth = 1) +
+  theme_classic(base_size = 16)
+```
+:::
+::::::
+
+:::::: {.grid}
+
+::: {.g-col-6}
+:::
+
+::: {.g-col-6}
+```{r}
+#| code-fold: true
+DATA %>%
+  filter(FriendsAtSchool < 30) %>%
+  ggplot(aes(x = as_factor(h_psycho), y = FriendsAtSchool)) +
+  geom_violin(fill = "lightgray") +
+  geom_jitter(width = 0.1,
+              height = 0,
+              shape = 21,
+              alpha = 0.2,
+              size = 4,
+              fill = "blue") +
+  stat_summary(fun = mean, 
+               geom = "line", 
+               aes(group = "x"), 
+               color = "blue", 
+               linewidth = 1) +
+  theme_classic(base_size = 16)
+```
+:::
+::::::
+
+### Korrelationsmatrix
+
+```{r}
+#| fig-width: 8
+#| fig-height: 8
+#| code-fold: true
+library(GGally) # https://ggobi.github.io/ggally/reference/ggpairs.html
+DATA %>% 
+  select(LonelinessHome,
+         LonelinessSchool,
+         SchoolInclusion,
+         ParentalInclusion,
+         FriendsNotAtSchool,
+         FriendsAtSchool) %>%
+  ggpairs()
+```
+
+```{r}
+#| fig-width: 10
+#| fig-height: 7
+#| code-fold: true
+# https://easystats.github.io/see/articles/correlation.html
+DATA %>% 
+  select(LonelinessHome,
+         LonelinessSchool,
+         SchoolInclusion,
+         ParentalInclusion,
+         FriendsNotAtSchool,
+         FriendsAtSchool) %>%
+  correlation(p_adjust = "none") %>%
+  summary(redundant = TRUE) %>% 
+  plot()
+```
+
+
+::: {.callout-tip}
+## Weiterführende Informationen
+
+- <https://openintro-ims.netlify.app/model-slr> (Lehrbuch)
+- <https://moderndive.com/v2/regression.html> (Lehrbuch)
+- <https://r-charts.com/correlation/>
+- <https://r-graph-gallery.com/correlogram.html>
+- <https://r-graph-gallery.com/scatterplot.html>
+- <https://easystats.github.io/correlation/>
+- <https://easystats.github.io/see/>
+- <https://corrr.tidymodels.org/>
+:::
+
+## Regression
+
+### Visualisierung
+
+```{r}
+DATA <-
+  read_xlsx("DATA_doi_10.1371_journal.pone.0058991.xlsx")
+
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point() +
+  geom_smooth() + # glatt (LOESS: locally estimated scatterplot smoothing)
+  theme_classic()
+
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  theme_classic()
+
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic()
+
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic()
+```
+
+### Berechnung
+
+```{r}
+lm(WPPSI ~ DAP_IQ, data = DATA)
+
+lm(WPPSI ~ DAP_IQ, data = DATA) %>%
+  summary()
+```
+
+---
+
+:::::: {.grid}
+
+::: {.g-col-5}
+```{r}
+lm(WPPSI ~ DAP_IQ, data = DATA) %>%
+  tab_model()
+```
+
+::: {.callout-tip}
+## Übung
+Interpretieren Sie die folgenden Parameter der Regressionsanalyse unter Berücksichtigung der Visualisierung (Streudiagramm mit Regressionsgerade):
+
+- Intercept
+- Regressionskoeffizient für DAP_IQ
+- *R*^2^
+:::
+
+:::
+
+::: {.g-col-7}
+```{r}
+#| code-fold: true
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic()
+```
+:::
+::::::
+
+::: {.callout-tip}
+## Übung
+Rechnen Sie 2 separate Regressionsmodelle und visualisieren Sie die Zusammenhänge mit Regressionsgeraden.
+
+**Regressionsmodell A**: Gibt es einen Zusammenhang zwischen Anzahl der Freunde in der Schule und Gefühlen der Einsamkeit in der Schule?
+
+**Regressionsmodell B**: Gibt es einen Zusammenhang zwischen psychischer Auffälligkeit und Gefühlen der Einsamkeit in der Schule?
+
+**Ausreißer bitte vor den Analysen entfernen (!):**
+
+```{r}
+DATA <-
+  read_sav("https://doi.org/10.1371/journal.pone.0250070.s003") %>% 
+  filter(FriendsAtSchool < 30)
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Lösung
+
+:::::: {.grid}
+::: {.g-col-5}
+```{r}
+lm(LonelinessSchool ~ FriendsAtSchool, data = DATA) %>% 
+  tab_model()
+```
+:::
+::: {.g-col-7}
+```{r}
+#| code-fold: true
+DATA %>%
+  ggplot(aes(x = FriendsAtSchool, y = LonelinessSchool)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
+  theme_classic()
+```
+:::
+:::::
+
+:::::: {.grid}
+::: {.g-col-5}
+```{r}
+lm(LonelinessSchool ~ h_psycho, data = DATA) %>% 
+  tab_model()
+```
+:::
+::: {.g-col-7}
+```{r}
+#| code-fold: true
+DATA %>%
+  ggplot(aes(x = h_psycho, y = LonelinessSchool)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
+  theme_classic()
+```
+:::
+:::::
+:::
+
+### Multiple Regression (mit Interaktionseffekt)
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+lm(LonelinessSchool ~ Female + FriendsAtSchool, data = DATA) %>% 
+  tab_model()
+```
+:::
+::: {.g-col-6}
+```{r}
+lm(LonelinessSchool ~ Female * FriendsAtSchool, data = DATA) %>% 
+  tab_model()
+```
+:::
+::::::
+
+---
+
+:::::: {.grid}
+::: {.g-col-5}
+```{r}
+lm(LonelinessSchool ~ Female * FriendsAtSchool, data = DATA) %>% 
+  tab_model()
+```
+:::
+::: {.g-col-7}
+```{r}
+#| code-fold: true
+DATA %>%
+  filter(FriendsAtSchool < 30) %>% 
+  ggplot(aes(x = FriendsAtSchool, y = LonelinessSchool, color = as_factor(Female))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+```
+:::
+::::::
+
+::: {.callout-tip}
+## Übung
+Rechnen Sie Regressionsmodelle mit Interaktionen:
+
+**Regressionsmodell A**:  Vorhersage von Gefühlen der Einsamkeit in der Schule anhand psychischer Auffälligkeit und Anzahl der Freunde in der Schule.
+
+**Regressionsmodell B**:  Vorhersage von Gefühlen der Einsamkeit in der Schule anhand motorischer Auffälligkeit und Anzahl der Freunde in der Schule.
+
+
+**Ausreißer bitte vor den Analysen entfernen (!):**
+
+```{r}
+DATA <-
+  read_sav("https://doi.org/10.1371/journal.pone.0250070.s003") %>% 
+  filter(FriendsAtSchool < 30)
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Lösung
+
+:::::: {.grid}
+::: {.g-col-5}
+```{r}
+lm(LonelinessSchool ~ h_psycho * FriendsAtSchool, data = DATA) %>% 
+  tab_model()
+```
+:::
+::: {.g-col-7}
+```{r}
+#| code-fold: true
+DATA %>%
+  filter(FriendsAtSchool < 30) %>% 
+  ggplot(aes(x = FriendsAtSchool, y = LonelinessSchool, color = as_factor(h_psycho))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+```
+:::
+::::::
+
+---
+
+:::::: {.grid}
+::: {.g-col-5}
+```{r}
+lm(LonelinessSchool ~ h_motor * FriendsAtSchool, data = DATA) %>% 
+  tab_model()
+```
+:::
+::: {.g-col-7}
+```{r}
+#| code-fold: true
+DATA %>%
+  filter(FriendsAtSchool < 30) %>% 
+  ggplot(aes(x = FriendsAtSchool, y = LonelinessSchool, color = as_factor(h_motor))) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+```
+:::
+::::::
+:::
+
+::: {.callout-tip}
+## Weiterführende Informationen
+
+- <https://openintro-ims.netlify.app/model-slr> (Lehrbuch)
+- <https://openintro-ims.netlify.app/model-mlr> (Lehrbuch)
+- <https://moderndive.com/v2/regression.html> (Lehrbuch)
+- <https://moderndive.com/v2/multiple-regression.html> (Lehrbuch)
+:::
+
+## Multilevel-Regression
 
 <https://exts.ggplot2.tidyverse.org/gallery/>
 

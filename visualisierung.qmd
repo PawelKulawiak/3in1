@@ -650,3 +650,41 @@ anim
 :::
 ::::::
 
+
+##
+
+WPPSI und DAP_IQ (x und y, mit Nullpunkt/Koordinatenursprung)
+
+:::::: {.columns}
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  geom_point(aes(y = 0), col = "blue") +
+  geom_point(aes(x = 0), col = "blue") +
+  #geom_point(col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic(base_size = 18)
+```
+:::
+
+::: {.column width="50%"}
+```{r}
+#| out-height: "100%"
+#| out-width: "100%"
+#| fig-asp: 1
+DATA %>%
+  ggplot(aes(x = DAP_IQ, y = WPPSI)) + 
+  #geom_point(aes(y = 0), col = "blue") +
+  #geom_point(aes(x = 0), col = "blue") +
+  geom_point(col = "blue") +
+  xlim(c(0, 150)) +
+  ylim(c(0, 140)) +
+  theme_classic(base_size = 18)
+```
+:::
+::::::
