@@ -86,6 +86,7 @@ library(ggside)      # https://cran.r-project.org/web/packages/ggside/readme/REA
 library(see)         # https://easystats.github.io/see/
 library(correlation) # https://easystats.github.io/correlation/index.html
 library(sjPlot)      # https://strengejacke.github.io/sjPlot/
+library(lme4)        # https://cran.r-project.org/web/packages/lme4/index.html
 ```
 
 ## Korrelation
@@ -881,9 +882,42 @@ DATA %>%
 
 ### Berechnung
 
+- <https://de.wikipedia.org/wiki/Lineare_Regression>
+- <https://www.theanalysisfactor.com/the-many-names-of-independent-variables/>
+
+*y* = *b*~0~ + *b*~1~*x*~1~
+
+y = n + mx
+
+f(x) = n + mx
+
+y = intercept + x
+
+y = x
+
+AV = UV 
+
+Outcome = Prädiktor
+
+Outcome ~ Prädiktor
+
+y ~ x
+
 ```{r}
 lm(WPPSI ~ DAP_IQ, data = DATA)
+```
 
+y = n + mx
+
+f(x) = n + mx
+
+y = intercept + x
+
+y = 79.39 + 0.23x
+
+WPPSI = 79.39 + 0.23*DAP_IQ
+
+```{r}
 lm(WPPSI ~ DAP_IQ, data = DATA) %>%
   summary()
 ```
@@ -977,6 +1011,22 @@ DATA %>%
   geom_point() +
   geom_smooth(method = "lm", se = FALSE, fullrange = TRUE) +
   theme_classic()
+
+DATA %>%
+  ggplot(aes(x = as_factor(h_psycho), y = LonelinessSchool)) +
+  geom_violin(fill = "lightgray") +
+  geom_jitter(width = 0.1,
+              height = 0,
+              shape = 21,
+              alpha = 0.2,
+              size = 4,
+              fill = "blue") +
+  stat_summary(fun = mean, 
+               geom = "line", 
+               aes(group = "x"), 
+               color = "blue", 
+               linewidth = 1) +
+               theme_classic()
 ```
 :::
 :::::
@@ -1095,9 +1145,238 @@ DATA %>%
 
 ## Multilevel-Regression
 
-<https://exts.ggplot2.tidyverse.org/gallery/>
+:::::: {.grid}
+::: {.g-col-6}
+![](FUN.png)
+:::
+::: {.g-col-6}
+- <https://www.theanalysisfactor.com/many-names-multilevel-models/>
+- [Mehrebenenanalyse](https://dorsch.hogrefe.com/stichwort/mehrebenenanalyse)
+- Hierarchische Lineare Modellierung
+- Gemischte lineare Regression
+- Multilevel-Analyse
+- Multilevel model
+- hierarchical linear model
+- linear mixed-effect model
+- mixed model
+- nested data model
+- random coefficient model
+- random-effects model
+- random parameter model
+- Fixed and random effects model
+
+- **It's Just Regression**
+
+:::
+::::::
+
+```{r}
+DATA <- read_excel("simulated_multi_level_data_ri.xlsx")
+
+DATA %>% 
+  select(id, social_inclusion, team_sports_activities) %>%
+  head()  %>%
+  gt() %>%
+  tab_options(table.align = "left") %>%
+  tab_header("Die ersten 6 kinder des Datensatzes", "360 Kinder insgesamt")
+```
+
+
+
+:::::: {.grid}
+::: {.g-col-5}
+```{r}
+lm(social_inclusion ~ team_sports_activities, data = DATA) %>% 
+  tab_model()
+```
+:::
+
+::: {.g-col-7}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic()
+```
+:::
+::::::
+
+
+::: {.callout-tip collapse="true"}
+## Mehrebenen-Datenstruktur (nested data, clustered data)
+![](nested.gif){width="100%"}
+
+![](nested.png){width="100%"}
+:::
+
+---
+
+```{=html}
+<iframe src="slides.html" width="100%" height="700px" frameborder="0"></iframe>
+```
+
+### Mixed Effects Model: Random Intercept Model
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion)) + ###########
+  geom_point() +
+  #
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 14)
+
+lm(social_inclusion ~ team_sports_activities, data = DATA) %>% ##########
+  tab_model()
+```
+:::
+
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+**In einer durchschnittlichen Klasse: Wenn team_sports_activities = 0, dann erwarten wir eine social_inclusion von 8.10**
+:::
+::::::
+
+---
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+**In einer durchschnittlichen Klasse: Wenn team_sports_activities = 0, dann erwarten wir eine social_inclusion von 8.10**
+:::
+
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities %>% scale(scale = F), y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities %>% scale(scale = F) + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+**In einer durchschnittlichen Klasse: Wenn team_sports_activities durchschnittlich ist (= 0), dann erwarten wir eine social_inclusion von 12.83**
+:::
+::::::
+
+---
+
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = T) +
+  geom_vline(xintercept = 0) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+**In einer durchschnittlichen Klasse: Wenn team_sports_activities = 0, dann erwarten wir eine social_inclusion von 8.10**
+:::
+
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities %>% scale(scale = F), y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = T) +
+  geom_vline(xintercept = 0) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities %>% scale(scale = F) + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+**In einer durchschnittlichen Klasse: Wenn team_sports_activities durchschnittlich ist (= 0), dann erwarten wir eine social_inclusion von 12.83**
+:::
+::::::
+
+---
+
+### Centering at the Grand Mean (CGM), Centering Within Cluster (CWC) & Cross-Level Interactions
+
+```{r}
+DATA <-
+  DATA %>%
+  group_by(CLASS) %>%
+  mutate(team_sports_activities_cwc = team_sports_activities - mean(team_sports_activities, na.rm = TRUE)) %>%
+  ungroup()
+
+DATA %>%
+  ggplot(aes(x = team_sports_activities_cwc, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE, fullrange = T) +
+  geom_vline(xintercept = 0) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities_cwc + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+
+---
+
+![[Cross-level interaction between teacher-reported structuredness and student-level academic self-concept predicting student-level enjoyment (Lazarides & Raufelder, 2020)](https://doi.org/10.1111/bjep.12352): „At low levels of teacher-reported cognitive activation, student-level mathematics self-concept at T1 was not significantly related to student-level mathematics enjoyment (–1SD; β = .13, SE = 0.08, p = .10). At high levels of teacher-reported cognitive activation, student-level mathematics self-concept at T1 was positively and significantly related to student-level mathematics enjoyment (+1SD; β = .38, SE = 0.09, p < .001).“](https://bpspsychub.onlinelibrary.wiley.com/cms/asset/d63be79b-1970-4a6c-bffc-69f004028c9d/bjep12352-fig-0002-m.jpg)
+
+::: {.callout-tip}
+## Literatur
+- <https://www.learn-mlms.com/08-module-8.html#module-8> (Lehrbuch)
+- Enders, C. K., & Tofighi, D. (2007). Centering predictor variables in cross-sectional multilevel models: A new look at an old issue. Psychological Methods, 12(2), 121–138. <https://psycnet.apa.org/doi/10.1037/1082-989X.12.2.121>
+- Aguinis, H., Gottfredson, R. K., & Culpepper, S. A. (2013). Best-Practice Recommendations for Estimating Cross-Level Interaction Effects Using Multilevel Modeling. Journal of Management, 39(6), 1490–1528. <https://doi.org/10.1177/0149206313478188>
+:::
+
+{{< video https://www.youtube.com/embed/lTPLX6UovEk?si=YmyahmWmohMAc6bH >}}
+
+
+::: {.callout-tip}
+## Übung: Random Intercept Model
+Berechnen und visualisieren Sie den Zusammenhang zwischen Sport und sozialer Inklusion unter Berücksichtigung der genesteten Datenstruktur (Kinder in Schulklassen).
+
+Daten: 
+:::
+
+### Mixed Effects Model: Random Slope and Intercept Model
+
+Lehrbücher / Ausblick
+
+Oben Pakete automatisch installieren.
+
 
 <https://bookdown.org/roback/bookdown-BeyondMLR/>
+
+<https://www.rensvandeschoot.com/tutorials/lme4/>
 
 ## R Session Info
 

@@ -1,0 +1,335 @@
+---
+format: html
+---
+
+
+```{r}
+library(simstudy)
+library(tidyverse)
+library(flextable)
+library(lme4)
+
+library(writexl)
+
+write_xlsx(DATA, "simulated_multi_level_data_ri.xlsx")
+
+set.seed(4)
+DATA <- genCorGen(100, 2,
+          params1 = c(10, 50),
+          params2 = c(5, 200),
+          dist = "normal",
+          rho = 0.6,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+summary(DATA)
+```
+
+```{r}
+TEST <- rep("...", 3) %>% matrix(1,3) %>% as.data.frame()
+
+names(TEST) <- names(DATA)
+
+rbind(DATA[1:12], TEST) %>%
+  flextable() %>%
+  bold(part = "header") %>%
+  align(part = "all", align = "right")
+```
+
+```{r}
+DATA$id <- NULL
+plot(DATA)
+
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "purple") +
+  theme_classic()
+```
+
+```{r}
+lm(social_inclusion ~ team_sports_activities, data = DATA) %>%
+  summary()
+
+lm(social_inclusion ~ team_sports_activities, data = DATA) %>%
+  as_flextable()
+```
+
+
+```{r}
+DATA_1 <- genCorGen(20, 2,
+          params1 = c(21, 50),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_2 <- genCorGen(20, 2,
+          params1 = c(19, 45),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_3 <- genCorGen(20, 2,
+          params1 = c(17, 40),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_4 <- genCorGen(20, 2,
+          params1 = c(15, 35),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_5 <- genCorGen(20, 2,
+          params1 = c(13, 30),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_6 <- genCorGen(20, 2,
+          params1 = c(11, 25),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_7 <- genCorGen(20, 2,
+          params1 = c(9, 20),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_8 <- genCorGen(20, 2,
+          params1 = c(7, 15),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_9 <- genCorGen(20, 2,
+          params1 = c(5, 10),
+          params2 = c(5, 20),
+          dist = "normal",
+          rho = 0.3,
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+
+CLASS <- c(
+  rep("A",20),
+  rep("B",20),
+  rep("C",20),
+  rep("D",20),
+  rep("E",20),
+  rep("F",20),
+  rep("G",20),
+  rep("H",20),
+  rep("I",20)
+  )
+
+DATA <- cbind(rbind(DATA_1, DATA_2, DATA_3, DATA_4, DATA_5, DATA_6, DATA_7, DATA_8, DATA_9), CLASS)
+```
+
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  theme_classic()
+```
+
+```{r}
+lm(social_inclusion ~ team_sports_activities, data = DATA)
+
+lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA)
+```
+### RS
+
+```{r}
+
+R <- rnorm(9, 0.5, 0.5)
+
+R <- rnorm(9, 0.5, 0.2)
+
+
+DATA_1 <- genCorGen(20, 2,
+          params1 = c(21, 50),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[1],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_2 <- genCorGen(20, 2,
+          params1 = c(19, 45),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[2],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_3 <- genCorGen(20, 2,
+          params1 = c(17, 40),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[3],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_4 <- genCorGen(20, 2,
+          params1 = c(15, 35),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[4],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_5 <- genCorGen(20, 2,
+          params1 = c(13, 30),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[5],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_6 <- genCorGen(20, 2,
+          params1 = c(11, 25),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[6],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_7 <- genCorGen(20, 2,
+          params1 = c(9, 40),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[7],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_8 <- genCorGen(20, 2,
+          params1 = c(7, 15),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[8],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+DATA_9 <- genCorGen(20, 2,
+          params1 = c(5, 10),
+          params2 = c(5, 40),
+          dist = "normal",
+          rho = R[9],
+          corstr = "cs",
+          wide = T,
+          cnames = c("social_inclusion", "team_sports_activities")) %>%
+  round()
+
+
+CLASS <- c(
+  rep("A",40),
+  rep("B",40),
+  rep("C",40),
+  rep("D",40),
+  rep("E",40),
+  rep("F",40),
+  rep("G",40),
+  rep("H",40),
+  rep("I",40)
+  )
+
+DATA <- cbind(rbind(DATA_1, DATA_2, DATA_3, DATA_4, DATA_5, DATA_6, DATA_7, DATA_8, DATA_9), CLASS)
+```
+
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic() +
+  theme(legend.position = "none")
+
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE, color = "black") +
+  theme_classic()
+```
+
+```{r}
+lm(social_inclusion ~ team_sports_activities, data = DATA)
+
+lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA)
+
+lmer(social_inclusion ~ team_sports_activities + (1 + team_sports_activities | CLASS), data = DATA)
+```
+
+
+```{r eval = F}
+install.packages("lme4")
+library(lme4)
+
+DATA <- read.csv2("https://data.com/08225")
+```
+
+
+
