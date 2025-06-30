@@ -89,6 +89,18 @@ library(sjPlot)      # https://strengejacke.github.io/sjPlot/
 library(lme4)        # https://cran.r-project.org/web/packages/lme4/index.html
 ```
 
+```{r}
+if (!require(tidyverse)) install.packages("tidyverse")
+if (!require(readxl)) install.packages("readxl")
+if (!require(haven)) install.packages("haven")
+if (!require(gt)) install.packages("gt")
+if (!require(ggside)) install.packages("ggside")
+if (!require(see)) install.packages("see")
+if (!require(correlation)) install.packages("correlation")
+if (!require(sjPlot)) install.packages("sjPlot")
+if (!require(lme4)) install.packages("lme4")
+```
+
 ## Korrelation
 
 ::::::: callout-tip
@@ -1361,22 +1373,76 @@ lmer(social_inclusion ~ team_sports_activities_cwc + (1 | CLASS), data = DATA) %
 
 
 ::: {.callout-tip}
-## Übung: Random Intercept Model
-Berechnen und visualisieren Sie den Zusammenhang zwischen Sport und sozialer Inklusion unter Berücksichtigung der genesteten Datenstruktur (Kinder in Schulklassen).
+## Übung: Klassische Regression vs. Random Intercept Model
+- **Klassische Regression:** Berechnen und visualisieren Sie den Zusammenhang zwischen Sport und sozialer Inklusion.
+- **Random Intercept Model:** Berechnen und visualisieren Sie den Zusammenhang zwischen Sport und sozialer Inklusion unter Berücksichtigung der genesteten Datenstruktur (Kinder in Schulklassen).
 
-Daten: 
+Daten-Download: <https://github.com/PawelKulawiak/3in1/blob/main/simulated_multi_level_data_rs.xlsx>
+
+```{r}
+DATA <- read_excel("simulated_multi_level_data_rs.xlsx")
+```
+:::
+
+::: {.callout-tip collapse="true"}
+## Lösung
+
+:::::: {.grid}
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion)) + ###########
+  geom_point() +
+  #
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 14)
+
+lm(social_inclusion ~ team_sports_activities, data = DATA) %>% ##########
+  tab_model()
+```
+:::
+
+
+::: {.g-col-6}
+```{r}
+DATA %>%
+  ggplot(aes(x = team_sports_activities, y = social_inclusion, color = CLASS)) +
+  geom_point() +
+  geom_jitter() +
+  geom_smooth(method = "lm", se = FALSE) +
+  theme_classic(base_size = 14)
+
+lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA) %>% 
+  tab_model()
+```
+:::
+::::::
+
 :::
 
 ### Mixed Effects Model: Random Slope and Intercept Model
 
-Lehrbücher / Ausblick
+::: {.callout-tip collapse="true"}
+## Lösung
+```{r}
 
-Oben Pakete automatisch installieren.
+MOD_1 <- lmer(social_inclusion ~ team_sports_activities + (1 | CLASS), data = DATA) 
+MOD_2 <- lmer(social_inclusion ~ team_sports_activities + (1 + team_sports_activities | CLASS), data = DATA)
+
+tab_model(MOD_1, MOD_2, show.aic = T)
+```
+:::
 
 
-<https://bookdown.org/roback/bookdown-BeyondMLR/>
+::: {.callout-tip}
+## Weiterführende Informationen
 
-<https://www.rensvandeschoot.com/tutorials/lme4/>
+- <https://www.learn-mlms.com/> (Lehrbuch)
+- <https://doi.org/10.4324/9781315650982> (Lehrbuch)
+- <https://uk.sagepub.com/en-gb/eur/multilevel-analysis/book234191> (Lehrbuch)
+- <https://www.bristol.ac.uk/cmm/learning/videos/>
+- <https://www.rensvandeschoot.com/tutorials/lme4/>
+:::
 
 ## R Session Info
 
